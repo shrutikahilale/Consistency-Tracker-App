@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "97104075407",
+    "project_id": "consistency-tracker-190eb",
+    "storage_bucket": "consistency-tracker-190eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97104075407:android:4ff29020cff0d2dd68eefa",
+        "android_client_info": {
+          "package_name": "com.example.consistencyTracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97104075407-p4p5dcubqva0ilj7alpn3isaluhftunc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfQInzvHdnFKa7sb6t0P61EB_P_OqurAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97104075407-p4p5dcubqva0ilj7alpn3isaluhftunc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
