@@ -53,7 +53,7 @@ class Home extends StatelessWidget {
                         hintText: 'How many hours did you work today?',
                         hintStyle: TextStyle(
                           color: Color.fromARGB(158, 16, 9, 47),
-                          fontSize: 16.0,
+                          fontSize: 14.0,
                         ),
                       ),
                     ),
@@ -114,7 +114,7 @@ class Home extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 200),
+              const SizedBox(height: 150),
 
               // direct view graph
               ElevatedButton(
@@ -132,7 +132,7 @@ class Home extends StatelessWidget {
                       textAlign: TextAlign.center,
                       'View this week\'s consistency graph',
                       style: GoogleFonts.lato(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                       )),
                 ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:practice3/home.dart';
 import 'package:practice3/chart.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:practice3/loading.dart';
