@@ -16,6 +16,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Consistency Tracker'),
       ),
+      drawer: Icon(Icons.menu),
       backgroundColor: Colors.grey[200],
       body: Padding(
         padding: const EdgeInsets.symmetric(
