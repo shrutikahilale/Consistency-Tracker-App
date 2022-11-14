@@ -12,8 +12,8 @@ void main() async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
-      // home: SplashScreen(),
+      // home: Home(),
+      home: SplashScreen(),
       routes: {
         '/chart': (context) => Chart(),
         '/loading': (context) => LoadingScreen(),
