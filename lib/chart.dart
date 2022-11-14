@@ -10,12 +10,6 @@ class Chart extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Consistency Tracker',
-          ),
-        ),
-        backgroundColor: Colors.grey[200],
         body: ListView(
           padding: const EdgeInsets.all(8.0),
           children: [
@@ -41,7 +35,7 @@ class Chart extends StatelessWidget {
               margin: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
-                color: Colors.white,
+                color: const Color.fromARGB(37, 255, 255, 255),
               ),
               child: AspectRatio(
                 aspectRatio: 1.3,
@@ -56,16 +50,32 @@ class Chart extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    'Total hours worked this week: ',
+                    'Consistent hours this week: ',
                     style: GoogleFonts.lato(
                         fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Text(
                   (sum.toStringAsPrecision(2)),
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 80),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.0),
+                  child: Text('Back to Home'),
+                ),
+              ),
             ),
           ],
         ),

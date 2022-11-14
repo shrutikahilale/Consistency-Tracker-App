@@ -72,32 +72,6 @@ class LoadingScreen extends StatelessWidget {
     return barChartGroupData;
   }
 
-  // update data in firestore then get data (update heights list), setup chart list and navigate to chartscreen
-  setUp(BuildContext context, double input) async {
-    // if today is monday then clear all graph
-    if (DateTime.now().weekday == 1) {
-      await clearRecords();
-    }
-
-    await updateDatainFS(input);
-    showGraph(context);
-  }
-
-  // after getting data from database, setup chart list and navigate to chartscreen
-  showGraph(BuildContext context) async {
-    // if today is monday then clear all graph
-    if (DateTime.now().weekday == 1) {
-      await clearRecords();
-    }
-    await getData();
-    setupChartList();
-
-    Navigator.popAndPushNamed(context, '/chart', arguments: {
-      'barChartGroupData': barChartGroupData,
-      'sum': sum.toString(),
-    });
-  }
-
   // clear records on monday
   clearRecords() async {
     for (int i = 0; i < 7; i++) {
@@ -105,22 +79,63 @@ class LoadingScreen extends StatelessWidget {
     }
   }
 
+  // update data in firestore then get data (update heights list), setup chart list and navigate to chartscreen
+  setUp(BuildContext context, double input) async {
+    // if today is monday then clear all graph
+    if (DateTime.now().weekday == 1) {
+      await clearRecords();
+    }
+
+    // update in firestore database
+    await updateDatainFS(input);
+
+    // get updated data
+    await getData();
+
+    // set up chartdata list
+    await setupChartList();
+
+    // navigate to charts screen
+    Navigator.popAndPushNamed(context, '/chart', arguments: {
+      'barChartGroupData': barChartGroupData,
+      'sum': sum.toString(),
+    });
+  }
+
+  // after getting data from database, setup chart list and navigate to chartscreen
+  showGraph(BuildContext context) async {
+    // get data from firestore database
+    await getData();
+
+    // set up chart data list
+    await setupChartList();
+
+    // navigate to charts screen
+    Navigator.popAndPushNamed(context, '/chart', arguments: {
+      'barChartGroupData': barChartGroupData,
+      'sum': sum.toString(),
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Map mp = ModalRoute.of(context)!.settings.arguments as Map;
-    if (mp['isempty'] == 'yes') {
+
+    if (mp['input'] == 0) {
+      // when view graph only
       showGraph(context);
     } else {
+      // on getting input
       setUp(context, double.parse(mp['input']));
     }
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: Color.fromARGB(255, 0, 0, 54),
       ),
       child: const Center(
         child: SpinKitDoubleBounce(
-          color: Color.fromRGBO(0, 25, 65, 1),
+          color: Colors.white,
           size: 100,
         ),
       ),

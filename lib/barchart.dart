@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class BarChartWidget extends StatelessWidget {
-  var borderProperty =
-      const BorderSide(color: Color.fromRGBO(0, 25, 65, 1), width: 5);
+  var borderProperty = const BorderSide(
+    color: Colors.white,
+    width: 3,
+  );
 
   List<BarChartGroupData> barChartGroupData = [];
 
@@ -22,7 +24,9 @@ class BarChartWidget extends StatelessWidget {
             sideTitles: bottomTitles,
             axisNameWidget: const Text(
               'Day',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 12,
+              ),
             ),
           ),
           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -56,8 +60,11 @@ Widget getTitles(double value, TitleMeta meta) {
 
   Widget text = Text(
     titles[value.toInt()],
-    style: const TextStyle(
+    style: TextStyle(
       fontSize: 14,
+      fontWeight: FontWeight.bold,
+      color:
+          value.toInt() == 6 ? const Color.fromARGB(255, 28, 109, 231) : Colors.white,
     ),
   );
   return SideTitleWidget(
@@ -65,3 +72,4 @@ Widget getTitles(double value, TitleMeta meta) {
     child: text,
   );
 }
+

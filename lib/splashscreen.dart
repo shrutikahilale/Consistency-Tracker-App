@@ -13,7 +13,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 3),
+        const Duration(seconds: 3),
         () => Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Home())));
   }
@@ -32,8 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
           Text(
             'Consistency Tracker',
             style: GoogleFonts.robotoMono(
-              fontSize: 24.0,
-              color: Colors.cyan,
+              fontSize: 20.0,
+              color: const Color.fromARGB(255, 0, 17, 45),
               decoration:  TextDecoration.none
             ),
           ),

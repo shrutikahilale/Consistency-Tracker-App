@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Home extends StatelessWidget {
-  var textinput = TextEditingController();
+class Home extends StatefulWidget {
+  @override
+  State<Home> createState() => _HomeState();
+}
 
-  var borderColor;
-
+class _HomeState extends State<Home> {
+  late TextEditingController textinput;
   String input = '';
 
-  Home({super.key});
+  @override
+  void initState() {
+    super.initState();
+    textinput = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    textinput.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +28,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Consistency Tracker'),
       ),
-      drawer: Icon(Icons.menu),
-      backgroundColor: Colors.grey[200],
+      drawer: const Icon(Icons.menu),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 0.0,
@@ -25,14 +36,15 @@ class Home extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const SizedBox(
                 height: 60,
               ),
-              Text('Welcome again!',
-                  style: GoogleFonts.lato(
-                      fontSize: 40, fontWeight: FontWeight.bold)),
+              Text(
+                'Welcome again!',
+                style:
+                    GoogleFonts.lato(fontSize: 40, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 50),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -54,7 +66,7 @@ class Home extends StatelessWidget {
                         hintText: 'How many hours did you work today?',
                         hintStyle: TextStyle(
                           color: Color.fromARGB(158, 16, 9, 47),
-                          fontSize: 14.0,
+                          fontSize: 18.0,
                         ),
                       ),
                     ),
@@ -125,10 +137,10 @@ class Home extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, '/loading',
-                      arguments: {'isempty': 'yes'});
+                      arguments: {'input': 0});
                 },
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(
                       textAlign: TextAlign.center,
                       'View this week\'s consistency graph',
