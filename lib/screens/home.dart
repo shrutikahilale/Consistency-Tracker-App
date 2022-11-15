@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:practice3/auth/login.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,6 +11,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late TextEditingController textinput;
   String input = '';
+
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   void initState() {
@@ -20,6 +24,10 @@ class _HomeState extends State<Home> {
   void dispose() {
     textinput.dispose();
     super.dispose();
+  }
+
+  Future signOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 
   @override
@@ -41,9 +49,10 @@ class _HomeState extends State<Home> {
                 height: 60,
               ),
               Text(
-                'Welcome again!',
+                'Have an amazing day!${user.email!}',
+                textAlign: TextAlign.center,
                 style:
-                    GoogleFonts.lato(fontSize: 40, fontWeight: FontWeight.bold),
+                    GoogleFonts.lato(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 50),
               Column(
@@ -150,6 +159,12 @@ class _HomeState extends State<Home> {
                       )),
                 ),
               ),
+
+              // sign out button
+              ElevatedButton(
+                onPressed: signOut,
+                child: Text('Sign out'),
+              )
             ],
           ),
         ),

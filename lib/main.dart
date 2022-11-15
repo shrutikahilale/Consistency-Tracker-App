@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:practice3/chart.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:practice3/home.dart';
-import 'package:practice3/loading.dart';
-import 'package:practice3/splashscreen.dart';
+import 'package:flutter/material.dart';
+import 'package:practice3/screens/chart.dart';
+import 'package:practice3/screens/home.dart';
+import 'package:practice3/screens/loading.dart';
+import 'package:practice3/auth/mainpage.dart';
+import 'package:practice3/auth/signup.dart';
+import 'package:practice3/screens/splashscreen.dart';
+import 'package:practice3/auth/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,11 +15,14 @@ void main() async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: Home(),
-      home: SplashScreen(),
+      home: MainPage(),
       routes: {
+        '/splashscreen' :(context) => SplashScreen(),
+        '/home' :(context) => Home(),
         '/chart': (context) => Chart(),
         '/loading': (context) => LoadingScreen(),
+        '/signup':(context) => SignUpPage(),
+        '/login':(context) => LoginPage(),
       },
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
@@ -28,7 +34,8 @@ void main() async {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            backgroundColor: Color.fromARGB(255, 28, 109, 231), // background (button) color
+            backgroundColor:
+                Color.fromARGB(255, 28, 109, 231), // background (button) color
             foregroundColor: Colors.white, // foreground (text) color
           ),
         ),
