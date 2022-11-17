@@ -15,8 +15,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   bool isNotVisible = true;
 
-  final firstnameinput = TextEditingController();
-  final lastnameinput = TextEditingController();
+  final fullnameinput = TextEditingController();
   final ageinput = TextEditingController();
   final emailinput = TextEditingController();
   final password1input = TextEditingController();
@@ -24,8 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    firstnameinput.dispose();
-    lastnameinput.dispose();
+    fullnameinput.dispose();
     ageinput.dispose();
     emailinput.dispose();
     password1input.dispose();
@@ -43,8 +41,8 @@ class _SignUpPageState extends State<SignUpPage> {
         );
 
         // add user details
-        addUser(firstnameinput.text.trim(), lastnameinput.text.trim(),
-            emailinput.text.trim(), int.parse(ageinput.text.trim()));
+        addUser(fullnameinput.text.trim(), emailinput.text.trim(),
+            int.parse(ageinput.text.trim()));
       } on FirebaseAuthException catch (e) {
         showDialog(
           context: context,
@@ -75,7 +73,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future addUser(
-      String firstName, String lastName, String email, int age) async {
+      String name, String email, int age) async {
     // database
     final db = FirebaseFirestore.instance;
 
@@ -86,8 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final userid = email;
 
     await users.doc(userid).set({
-      'first name': firstName,
-      'last name': lastName,
+      'name': name,
       'email': email,
       'age': age,
     });
@@ -103,8 +100,7 @@ class _SignUpPageState extends State<SignUpPage> {
     if (emailinput.text.isNotEmpty &&
         password1input.text.isNotEmpty &&
         password2input.text.isNotEmpty &&
-        firstnameinput.text.isNotEmpty &&
-        lastnameinput.text.isNotEmpty) {
+        fullnameinput.text.isNotEmpty) {
       return true;
     }
     return false;
@@ -128,6 +124,16 @@ class _SignUpPageState extends State<SignUpPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: Image(
+                    image: AssetImage('assets/app-logo-no-bg.png'),
+                  ),
+                  radius: 80,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 // welcome text
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -143,57 +149,27 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(
                   height: 8,
                 ),
-                const Text('Create an awesome account!'),
 
-                const SizedBox(
-                  height: 20,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextField(
+                      controller: fullnameinput,
+                      cursorColor: Color.fromARGB(255, 16, 9, 47),
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: "Full Name *",
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
                 ),
-
                 // first name
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: TextField(
-                      controller: firstnameinput,
-                      cursorColor: Color.fromARGB(255, 16, 9, 47),
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        hintText: "First Name *",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 10,
-                ),
-
-                // last name
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: TextField(
-                      controller: lastnameinput,
-                      cursorColor: Color.fromARGB(255, 16, 9, 47),
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        hintText: "Last Name *",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
 
                 SizedBox(
                   height: 10,
@@ -208,13 +184,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: TextField(
-                      controller: ageinput,
-                      cursorColor: Color.fromARGB(255, 16, 9, 47),
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        hintText: "Age",
-                        border: InputBorder.none,
+                    child: Flexible(
+                      child: TextField(
+                        controller: ageinput,
+                        cursorColor: Color.fromARGB(255, 16, 9, 47),
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: "Age",
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),

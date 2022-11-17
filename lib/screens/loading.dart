@@ -8,7 +8,7 @@ class LoadingScreen extends StatelessWidget {
   double sum = 0;
   List<double> heights = [];
   List<BarChartGroupData> barChartGroupData = [];
-  List<Color> barRodColor = List.generate(7, (index) => Colors.cyan);
+  List<Color> barRodColor = List.generate(7, (index) => Colors.white);
 
   // CollectionReference hrs = FirebaseFirestore.instance.collection('_hours');
 

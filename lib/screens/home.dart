@@ -159,7 +159,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-              SizedBox(height: 80),
+              SizedBox(height: 50),
 
               // sign out button
               ElevatedButton(

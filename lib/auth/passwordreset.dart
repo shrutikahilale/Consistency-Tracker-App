@@ -22,25 +22,25 @@ class _PasswordResetState extends State<PasswordReset> {
   Future passwordreset() async {
     try {
       await FirebaseAuth.instance
-        .sendPasswordResetEmail(email: emailinput.text.trim());
+          .sendPasswordResetEmail(email: emailinput.text.trim());
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Text('Reset link sent to your email'),
-        );
-      },
-    );
-    }on FirebaseAuthException catch (e) {
       showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Text(e.message.toString()),
-        );
-      },
-    );
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text('Reset link sent to your email'),
+          );
+        },
+      );
+    } on FirebaseAuthException catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(e.message.toString()),
+          );
+        },
+      );
     }
   }
 
@@ -52,15 +52,28 @@ class _PasswordResetState extends State<PasswordReset> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Enter email id to get a reset password link',
-              style: TextStyle(
-                fontSize: 24,
+            CircleAvatar(
+              backgroundColor: Colors.transparent,
+              child: Image(
+                image: AssetImage('assets/app-logo-no-bg.png'),
               ),
-              textAlign: TextAlign.center,
+              radius: 80,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal:10.0),
+              child: Text(
+                'Enter email id to get a reset password link',
+                style: TextStyle(
+                  fontSize: 22,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             // email
             Padding(
@@ -85,7 +98,7 @@ class _PasswordResetState extends State<PasswordReset> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             MaterialButton(
               onPressed: passwordreset,

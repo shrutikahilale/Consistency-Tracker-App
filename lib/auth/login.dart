@@ -60,6 +60,16 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: Image(
+                    image: AssetImage('assets/app-logo-no-bg.png'),
+                  ),
+                  radius: 80,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 // welcome text
                 const Text(
                   'Hello Again!',
@@ -74,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                 const Text('Welcome, you\'ve been missed'),
 
                 const SizedBox(
-                  height: 100,
+                  height: 60,
                 ),
 
                 // email
@@ -220,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     Text(
-                      'Not a member? ',
+                      'New to Consistency Tracker? ',
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(117, 245, 245, 245),
