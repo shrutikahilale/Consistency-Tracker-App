@@ -9,6 +9,8 @@ class BarChartWidget extends StatelessWidget {
 
   List<BarChartGroupData> barChartGroupData = [];
 
+  BarChartWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     Map mp = ModalRoute.of(context)!.settings.arguments as Map;

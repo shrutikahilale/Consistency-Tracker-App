@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,10 +10,15 @@ class LoadingScreen extends StatelessWidget {
   List<BarChartGroupData> barChartGroupData = [];
   List<Color> barRodColor = List.generate(7, (index) => Colors.cyan);
 
-  CollectionReference hrs = FirebaseFirestore.instance.collection('_hours');
+  // CollectionReference hrs = FirebaseFirestore.instance.collection('_hours');
+
+  // from current user -> get email -> go to that user document -> get hours collection
+  CollectionReference hrs =
+      FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email).collection('hours');
 
   // getdata from firestore
   Future<void> getData() async {
+    //
     for (int i = 0; i < 7; i++) {
       await hrs
           .doc(i.toString())
@@ -130,7 +136,7 @@ class LoadingScreen extends StatelessWidget {
     }
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color.fromARGB(255, 0, 0, 54),
       ),
       child: const Center(

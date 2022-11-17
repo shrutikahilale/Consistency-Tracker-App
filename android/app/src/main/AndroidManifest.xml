@@ -3,7 +3,7 @@
    <application
         android:label="consistencyTracker"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/consistency_tracker_app">
         <activity
             android:name=".MainActivity"
             android:exported="true"

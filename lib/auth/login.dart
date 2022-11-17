@@ -1,15 +1,12 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:practice3/screens/splashscreen.dart';
-
-import '../screens/home.dart';
+import 'package:practice3/auth/passwordreset.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final VoidCallback showSignupPage;
+  const LoginPage({super.key, required this.showSignupPage});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -36,10 +33,21 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future signin() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailinput.text.trim(),
-      password: passwordinput.text.trim(),
-    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailinput.text.trim(),
+        password: passwordinput.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      showDialog(
+        context: context,
+        builder: ((context) {
+          return AlertDialog(
+            content: Text(e.message.toString()),
+          );
+        }),
+      );
+    }
   }
 
   @override
@@ -143,7 +151,38 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 SizedBox(
-                  height: 30,
+                  height: 10,
+                ),
+
+                // forgot password
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 25.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: ((context) => PasswordReset()),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Forgot password?',
+                          style: TextStyle(
+                            fontSize: 16,
+                            // color: Color.fromARGB(255, 32, 121, 255),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(
+                  height: 10,
                 ),
 
                 // sign in button
@@ -188,9 +227,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.popAndPushNamed(context, '/signup');
-                      },
+                      onTap: widget.showSignupPage,
                       child: Text(
                         'Register now!',
                         style: TextStyle(

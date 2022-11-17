@@ -1,16 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:practice3/screens/home.dart';
-import 'package:practice3/auth/login.dart';
 import 'package:practice3/screens/splashscreen.dart';
+import 'authpage.dart';
 
-class MainPage extends StatefulWidget {
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
+class MainPage extends StatelessWidget {
+  const MainPage({super.key});
 
-class _MainPageState extends State<MainPage> {
-  
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
@@ -19,12 +14,10 @@ class _MainPageState extends State<MainPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           // if yes then directly open the Home page
-          print('home page');
-          return Home();
+          return SplashScreen();
         } else {
           // else let the user sign in or sign up
-          print('login page');
-          return LoginPage();
+          return AuthPage();
         }
       },
     );

@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: const Color.fromARGB(255, 0, 17, 45)),
+      decoration: const BoxDecoration(color: Color.fromARGB(255, 0, 17, 45)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 100,
             ),
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Text(
             'Consistency Tracker',
             style: GoogleFonts.robotoMono(

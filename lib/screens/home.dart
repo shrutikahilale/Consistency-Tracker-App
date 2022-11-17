@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:practice3/auth/login.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,7 +14,7 @@ class _HomeState extends State<Home> {
   final user = FirebaseAuth.instance.currentUser!;
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
     textinput = TextEditingController();
   }
@@ -49,7 +48,7 @@ class _HomeState extends State<Home> {
                 height: 60,
               ),
               Text(
-                'Have an amazing day!${user.email!}',
+                'Have an amazing day!',
                 textAlign: TextAlign.center,
                 style:
                     GoogleFonts.lato(fontSize: 30, fontWeight: FontWeight.bold),
@@ -159,6 +158,8 @@ class _HomeState extends State<Home> {
                       )),
                 ),
               ),
+
+              SizedBox(height: 80),
 
               // sign out button
               ElevatedButton(

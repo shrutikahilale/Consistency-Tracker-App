@@ -1,33 +1,32 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+  final VoidCallback showLoginPage;
+  const SignUpPage({super.key, required this.showLoginPage});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  bool isNotVisible1 = true;
-  bool isNotVisible2 = true;
+  bool isNotVisible = true;
 
-  late TextEditingController emailinput;
-  late TextEditingController password1input;
-  late TextEditingController password2input;
-
-  @override
-  void initState() {
-    super.initState();
-    emailinput = TextEditingController();
-    password1input = TextEditingController();
-    password2input = TextEditingController();
-  }
+  final firstnameinput = TextEditingController();
+  final lastnameinput = TextEditingController();
+  final ageinput = TextEditingController();
+  final emailinput = TextEditingController();
+  final password1input = TextEditingController();
+  final password2input = TextEditingController();
 
   @override
   void dispose() {
+    firstnameinput.dispose();
+    lastnameinput.dispose();
+    ageinput.dispose();
     emailinput.dispose();
     password1input.dispose();
     password2input.dispose();
@@ -36,16 +35,26 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Future register() async {
     if (allfieldsfilled() && passwordCheck()) {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailinput.text.trim(),
-        password: password1input.text.trim(),
-      );
+      try {
+        // create user
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailinput.text.trim(),
+          password: password1input.text.trim(),
+        );
 
-      Navigator.pushReplacementNamed(context, '/login');
-      // await FirebaseAuth.instance.signInWithEmailAndPassword(
-      //   email: emailinput.text.trim(),
-      //   password: password1input.text.trim(),
-      // );
+        // add user details
+        addUser(firstnameinput.text.trim(), lastnameinput.text.trim(),
+            emailinput.text.trim(), int.parse(ageinput.text.trim()));
+      } on FirebaseAuthException catch (e) {
+        showDialog(
+          context: context,
+          builder: ((context) {
+            return AlertDialog(
+              content: Text(e.message.toString()),
+            );
+          }),
+        );
+      }
     } else if (!passwordCheck()) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -65,10 +74,37 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
+  Future addUser(
+      String firstName, String lastName, String email, int age) async {
+    // database
+    final db = FirebaseFirestore.instance;
+
+    // users collection
+    CollectionReference users = db.collection('users');
+
+    // add user to collection and set email ID as doc ID for the user
+    final userid = email;
+
+    await users.doc(userid).set({
+      'first name': firstName,
+      'last name': lastName,
+      'email': email,
+      'age': age,
+    });
+
+    // add hours collection to userId document then add 7 documents for each day
+    final hours = users.doc(userid).collection('hours');
+    for (int i = 0; i < 7; i++) {
+      await hours.doc(i.toString()).set({'day': i, 'hours': 0});
+    }
+  }
+
   bool allfieldsfilled() {
     if (emailinput.text.isNotEmpty &&
         password1input.text.isNotEmpty &&
-        password2input.text.isNotEmpty) {
+        password2input.text.isNotEmpty &&
+        firstnameinput.text.isNotEmpty &&
+        lastnameinput.text.isNotEmpty) {
       return true;
     }
     return false;
@@ -110,13 +146,89 @@ class _SignUpPageState extends State<SignUpPage> {
                 const Text('Create an awesome account!'),
 
                 const SizedBox(
-                  height: 100,
+                  height: 20,
+                ),
+
+                // first name
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextField(
+                      controller: firstnameinput,
+                      cursorColor: Color.fromARGB(255, 16, 9, 47),
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: "First Name *",
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(
+                  height: 10,
+                ),
+
+                // last name
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextField(
+                      controller: lastnameinput,
+                      cursorColor: Color.fromARGB(255, 16, 9, 47),
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: "Last Name *",
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(
+                  height: 10,
+                ),
+
+                // age
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextField(
+                      controller: ageinput,
+                      cursorColor: Color.fromARGB(255, 16, 9, 47),
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: "Age",
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(
+                  height: 10,
                 ),
 
                 // email
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
+                    padding: EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(12),
@@ -126,10 +238,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       cursorColor: Color.fromARGB(255, 16, 9, 47),
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        hintText: "Enter your email id",
-                        prefixIcon: Icon(
-                          Icons.alternate_email,
-                        ),
+                        hintText: "Email id *",
                         border: InputBorder.none,
                       ),
                     ),
@@ -144,6 +253,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
+                    padding: EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(12),
@@ -155,13 +265,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             controller: password1input,
                             cursorColor: Color.fromARGB(255, 16, 9, 47),
                             decoration: InputDecoration(
-                              hintText: "Password",
-                              prefixIcon: Icon(
-                                Icons.lock,
-                              ),
+                              hintText: "Password *",
                               border: InputBorder.none,
                             ),
-                            obscureText: isNotVisible1,
+                            obscureText: isNotVisible,
                           ),
                         ),
                         Padding(
@@ -169,12 +276,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                isNotVisible1 =
-                                    isNotVisible1 == true ? false : true;
+                                isNotVisible =
+                                    isNotVisible == true ? false : true;
                               });
                             },
                             child: Icon(
-                              isNotVisible1 == true
+                              isNotVisible == true
                                   ? Icons.visibility_off
                                   : Icons.visibility,
                               color: Colors.grey[600],
@@ -193,6 +300,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
+                    padding: EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(12),
@@ -204,13 +312,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             controller: password2input,
                             cursorColor: Color.fromARGB(255, 16, 9, 47),
                             decoration: InputDecoration(
-                              hintText: "Confirm password",
-                              prefixIcon: Icon(
-                                Icons.lock,
-                              ),
+                              hintText: "Confirm password *",
                               border: InputBorder.none,
                             ),
-                            obscureText: isNotVisible2,
+                            obscureText: isNotVisible,
                           ),
                         ),
                         Padding(
@@ -218,12 +323,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                isNotVisible2 =
-                                    isNotVisible2 == true ? false : true;
+                                isNotVisible =
+                                    isNotVisible == true ? false : true;
                               });
                             },
                             child: Icon(
-                              isNotVisible2 == true
+                              isNotVisible == true
                                   ? Icons.visibility_off
                                   : Icons.visibility,
                               color: Colors.grey[600],
@@ -280,9 +385,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.popAndPushNamed(context, '/login');
-                      },
+                      onTap: widget.showLoginPage,
                       child: Text(
                         'Sign in here!',
                         style: TextStyle(
