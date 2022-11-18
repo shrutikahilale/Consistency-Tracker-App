@@ -3,6 +3,8 @@ import 'package:practice3/barchart.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Chart extends StatelessWidget {
+  const Chart({super.key});
+
   @override
   Widget build(BuildContext context) {
     Map mp = ModalRoute.of(context)!.settings.arguments as Map;
@@ -13,22 +15,22 @@ class Chart extends StatelessWidget {
         body: ListView(
           padding: const EdgeInsets.all(8.0),
           children: [
+            const SizedBox(height: 60,),
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 20.0,
               ),
               margin: const EdgeInsets.only(top: 50.0),
-              child: Text(
+              child: const Text(
                 'Your Consistency graph this week',
                 textAlign: TextAlign.center,
-                style: GoogleFonts.lato(
-                  fontWeight: FontWeight.w800,
+                style: TextStyle(
                   fontSize: 30.0,
                 ),
               ),
             ),
             const SizedBox(
-              height: 30.0,
+              height: 70.0,
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(4, 30, 30, 10),
@@ -45,25 +47,32 @@ class Chart extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Flexible(
-                  child: Text(
-                    'Consistent hours this week: ',
-                    style: GoogleFonts.lato(
-                        fontSize: 20.0, fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal:8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Flexible(
+                    child: Text(
+                      'Consistent hours this week: ',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-                Text(
-                  (sum.toStringAsPrecision(2)),
-                  style: const TextStyle(
-                      fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
-              ],
+                  Text(
+                    (sum.toStringAsPrecision(2)),
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
-              height: 40,
+              height: 80,
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 80),

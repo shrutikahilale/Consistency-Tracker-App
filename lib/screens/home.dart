@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:practice3/auth/mainpage.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   State<Home> createState() => _HomeState();
 }
@@ -14,7 +17,7 @@ class _HomeState extends State<Home> {
   final user = FirebaseAuth.instance.currentUser!;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     textinput = TextEditingController();
   }
@@ -25,8 +28,11 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-  Future signOut() async {
+  Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
+
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: ((context) => MainPage())));
   }
 
   @override
@@ -47,11 +53,12 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 60,
               ),
-              Text(
+              const Text(
                 'Have an amazing day!',
                 textAlign: TextAlign.center,
-                style:
-                    GoogleFonts.lato(fontSize: 30, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 36,
+                ),
               ),
               const SizedBox(height: 50),
               Column(
@@ -74,7 +81,7 @@ class _HomeState extends State<Home> {
                         hintText: 'How many hours did you work today?',
                         hintStyle: TextStyle(
                           color: Color.fromARGB(158, 16, 9, 47),
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                         ),
                       ),
                     ),
@@ -125,11 +132,10 @@ class _HomeState extends State<Home> {
                         );
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       'submit',
-                      style: GoogleFonts.lato(
+                      style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -147,23 +153,22 @@ class _HomeState extends State<Home> {
                   Navigator.pushNamed(context, '/loading',
                       arguments: {'input': 0});
                 },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
                       textAlign: TextAlign.center,
                       'View this week\'s consistency graph',
-                      style: GoogleFonts.lato(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                      style: TextStyle(
+                        fontSize: 20,
                       )),
                 ),
               ),
 
-              SizedBox(height: 50),
+              const SizedBox(height: 120),
 
               // sign out button
               ElevatedButton(
-                onPressed: signOut,
+                onPressed: _signOut,
                 child: Text('Sign out'),
               )
             ],

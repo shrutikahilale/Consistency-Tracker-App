@@ -14,10 +14,10 @@ class MainPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           // if yes then directly open the Home page
-          return SplashScreen();
+          return const SplashScreen();
         } else {
           // else let the user sign in or sign up
-          return AuthPage();
+          return const AuthPage();
         }
       },
     );

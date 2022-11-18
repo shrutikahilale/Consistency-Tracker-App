@@ -54,10 +54,10 @@ class _PasswordResetState extends State<PasswordReset> {
           children: [
             CircleAvatar(
               backgroundColor: Colors.transparent,
+              radius: 80,
               child: Image(
                 image: AssetImage('assets/app-logo-no-bg.png'),
               ),
-              radius: 80,
             ),
             const SizedBox(
               height: 40,
@@ -102,11 +102,11 @@ class _PasswordResetState extends State<PasswordReset> {
             ),
             MaterialButton(
               onPressed: passwordreset,
+              color: Color.fromARGB(255, 28, 109, 231),
               child: Text(
                 'Reset Password',
                 style: TextStyle(color: Colors.white),
               ),
-              color: Color.fromARGB(255, 28, 109, 231),
             )
           ],
         ),

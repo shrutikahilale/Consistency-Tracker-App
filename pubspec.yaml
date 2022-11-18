@@ -81,12 +81,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: InterRegular
-  #     fonts:
-  #       - asset: fonts/Inter-Regular.ttf
-  #       - asset: fonts/Inter-SemiBold.ttf
-  #         weight: 300
+  fonts:
+    - family: CascadiaMono
+      fonts:
+        - asset: fonts/CascadiaMono.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

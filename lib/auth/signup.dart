@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +42,8 @@ class _SignUpPageState extends State<SignUpPage> {
         // add user details
         addUser(fullnameinput.text.trim(), emailinput.text.trim(),
             int.parse(ageinput.text.trim()));
+
+        
       } on FirebaseAuthException catch (e) {
         showDialog(
           context: context,
@@ -72,8 +73,7 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  Future addUser(
-      String name, String email, int age) async {
+  Future addUser(String name, String email, int age) async {
     // database
     final db = FirebaseFirestore.instance;
 
@@ -126,28 +126,26 @@ class _SignUpPageState extends State<SignUpPage> {
               children: [
                 CircleAvatar(
                   backgroundColor: Colors.transparent,
+                  radius: 80,
                   child: Image(
                     image: AssetImage('assets/app-logo-no-bg.png'),
                   ),
-                  radius: 80,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+
                 // welcome text
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: const Text(
                     'Welcome to Consistency Tracker!',
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 50,
                 ),
 
                 Padding(
@@ -260,8 +258,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             },
                             child: Icon(
                               isNotVisible == true
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: Colors.grey[600],
                             ),
                           ),
@@ -307,8 +305,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             },
                             child: Icon(
                               isNotVisible == true
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: Colors.grey[600],
                             ),
                           ),
@@ -347,33 +345,26 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
 
                 SizedBox(
-                  height: 10,
+                  height: 40,
                 ),
                 // not a member? register now!
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    Text(
-                      'Already have an account? ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(117, 245, 245, 245),
-                      ),
+                Text(
+                  'Already have an account? ',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color.fromARGB(117, 245, 245, 245),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: widget.showLoginPage,
+                  child: Text(
+                    'Sign in here!',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color.fromARGB(255, 72, 235, 77),
                     ),
-                    GestureDetector(
-                      onTap: widget.showLoginPage,
-                      child: Text(
-                        'Sign in here!',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 72, 235, 77),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),

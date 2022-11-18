@@ -16,36 +16,44 @@ void main() async {
       debugShowCheckedModeBanner: false,
       home: const MainPage(),
       routes: {
-        '/splashscreen' :(context) => SplashScreen(),
-        '/home' :(context) => Home(),
-        '/chart': (context) => Chart(),
+        '/splashscreen': (context) => const SplashScreen(),
+        '/home': (context) => const Home(),
+        '/chart': (context) => const Chart(),
         '/loading': (context) => LoadingScreen(),
-        '/passwordrest':(context) => PasswordReset(),
-        // '/signup':(context) =>  SignUpPage(),
-        // '/login':(context) =>  LoginPage(),
+        '/passwordrest': (context) => const PasswordReset(),
       },
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          color: Color.fromARGB(255, 0, 0, 45),
-        ),
-        scaffoldBackgroundColor: Color.fromARGB(255, 0, 0, 54),
+            color: Color.fromARGB(255, 0, 0, 45),
+            titleTextStyle: TextStyle(
+              fontFamily: 'CascadiaMono',
+              fontSize: 20,
+            )),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 54),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            backgroundColor:
-                const Color.fromARGB(255, 28, 109, 231), // background (button) color
-            foregroundColor: Colors.white, // foreground (text) color
-          ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              backgroundColor: const Color.fromARGB(
+                  255, 28, 109, 231), // background (button) color
+              foregroundColor: Colors.white,
+              textStyle: const TextStyle(
+                fontFamily: 'CascadiaMono',
+              ) // foreground (text) color
+              ),
         ),
-        fontFamily: 'Inter',
         textTheme: const TextTheme(
           // bodytext2: screen pe jitna bhi color hai usko white color diya
-          bodyText2: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          bodyText2: TextStyle(
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontFamily: 'CascadiaMono',
+          ),
 
           // textfield me jo text likhne me ata uska color
-          subtitle1: TextStyle(color: Color.fromARGB(255, 16, 9, 47)),
+          subtitle1: TextStyle(
+            color: Color.fromARGB(255, 16, 9, 47),
+          ),
         ),
       ),
     ),

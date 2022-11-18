@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,8 @@ class LoadingScreen extends StatelessWidget {
   // from current user -> get email -> go to that user document -> get hours collection
   CollectionReference hrs =
       FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email).collection('hours');
+
+  LoadingScreen({super.key});
 
   // getdata from firestore
   Future<void> getData() async {

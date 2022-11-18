@@ -62,10 +62,10 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 CircleAvatar(
                   backgroundColor: Colors.transparent,
+                  radius: 80,
                   child: Image(
                     image: AssetImage('assets/app-logo-no-bg.png'),
                   ),
-                  radius: 80,
                 ),
                 const SizedBox(
                   height: 20,
@@ -149,8 +149,8 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             child: Icon(
                               isNotVisible == true
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: Colors.grey[600],
                             ),
                           ),
@@ -221,33 +221,25 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 SizedBox(
-                  height: 10,
+                  height: 40,
                 ),
                 // not a member? register now!
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    Text(
-                      'New to Consistency Tracker? ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(117, 245, 245, 245),
-                      ),
+                Text(
+                  'New to Consistency Tracker? ',
+                  style: TextStyle(
+                    color: Color.fromARGB(117, 245, 245, 245),
+                    fontSize: 16,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: widget.showSignupPage,
+                  child: Text(
+                    'Register now!',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 72, 235, 77),
+                      fontSize: 16,
                     ),
-                    GestureDetector(
-                      onTap: widget.showSignupPage,
-                      child: Text(
-                        'Register now!',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 72, 235, 77),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
